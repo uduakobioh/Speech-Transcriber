@@ -1,0 +1,4 @@
+SpeechRecognition
+Pillow
+fpdf
+PyAudio
