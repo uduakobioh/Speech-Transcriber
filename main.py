@@ -16,16 +16,18 @@ def listen():
     with m as source:
         r.adjust_for_ambient_noise(m, 0.6)
         listen_message.configure(text='Listening...')
+        listen_message.update()
         audio = r.listen(source)
         listen_message.configure(text='Recognizing Audio')
+        listen_message.update()
         try:
             transcript = r.recognize_google(audio, show_all=False)
             listen_message.configure(text="Done Recognizing")
         except sr.UnknownValueError:
-            pass
             listen_message.configure(text="System could not understand audio. Try Again")
         except sr.RequestError or sr.ConnectionAbortedError:
             listen_message.configure(text="Couldn't connect to google services. Check internet connection.")
+        listen_message.update()
 
 
 def browse():
@@ -91,7 +93,8 @@ listen_button.place(x=134.8, y=300, width=179.5, height=60)
 restart_icon = ImageTk.PhotoImage(Image.open("restart-icon.png"))
 restart_button = Button(root,
                         image=restart_icon,
-                        bg='#235789')
+                        bg='#235789',
+                        command=listen)
 restart_button.place(x=321.5, y=307.5, width=45, height=45)
 listen_message_frame = Frame(root,
                              bg=window_bg,
